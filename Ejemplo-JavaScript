@@ -1,0 +1,31 @@
+class Database {
+    
+  // El campo para almacenar la instancia singleton debe
+  // declararse estático.
+  static instance = null;
+
+  // El constructor del singleton siempre debe ser privado
+  // para evitar llamadas de construcción directas con el
+  // operador `new`.
+  constructor() {
+    // Algún código de inicialización, como la propia
+    // conexión al servidor de una base de datos.
+    // ...
+  }
+
+  // El método estático que controla el acceso a la instancia
+  // singleton.
+  static getInstance() {
+    if (Database.instance === null) {
+      // Garantiza que la instancia aún no se ha
+      // inicializado por otro hilo mientras ésta ha
+      // estado esperando el desbloqueo.
+      Database.instance = new Database();
+    }
+    return Database.instance;
+   
+  }
+}
+const db1 = Database.getInstance();
+const db2 = Database.getInstance();
+console.log(db1 === db2); // Devuelve true
